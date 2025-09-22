@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .receipt {
+            background-color: white;
+            width: 300px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 5px;
+        }
+
+        .sub-logo {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .store-info {
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .order-info {
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .order-info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .items {
+            margin-bottom: 15px;
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 10px;
+        }
+
+        .item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .item-name {
+            max-width: 180px;
+        }
+
+        .item-price {
+            font-weight: bold;
+        }
+
+        .summary {
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .total {
+            font-weight: bold;
+            font-size: 16px;
+            border-top: 1px dashed #ccc;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+
+        .qr-section {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px dashed #ccc;
+        }
+
+        .qr-code {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .footer {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .thank-you {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #000;
+        }
+    </style>
+
+    <title>喜茶订单小票</title>
+</head>
+
+<body>
+    <div class="receipt">
+        <div class="header">
+            <div class="logo">喜茶</div>
+            <div class="sub-logo">HEYTEA</div>
+        </div>
+
+        <div class="store-info">
+            <div>喜茶 · 上海临港新天地店</div>
+            <div>电话: 0755-12345678</div>
+        </div>
+
+        <div class="order-info">
+            <div class="order-info-row">
+                <span>订单号:</span>
+                <span>20250809123456</span>
+            </div>
+            <div class="order-info-row">
+                <span>日期:</span>
+                <span>2025-08-09 15:30:22</span>
+            </div>
+            <div class="order-info-row">
+                <span>收银员:</span>
+                <span>张小明</span>
+            </div>
+            <div class="order-info-row">
+                <span>取餐号:</span>
+                <span>A123</span>
+            </div>
+        </div>
+
+        <div class="items">
+            <div class="item">
+                <div class="item-name">多肉葡萄 (标准冰/标准糖)</div>
+                <div class="item-price">¥28.00</div>
+            </div>
+            <div class="item">
+                <div class="item-name">烤黑糖波波牛乳 (标准冰/少糖)</div>
+                <div class="item-price">¥25.00</div>
+            </div>
+            <div class="item">
+                <div class="item-name">芋泥波波牛乳 (热/标准糖)</div>
+                <div class="item-price">¥26.00</div>
+            </div>
+        </div>
+
+        <div class="summary">
+            <div class="summary-row">
+                <span>商品合计:</span>
+                <span>¥79.00</span>
+            </div>
+            <div class="summary-row">
+                <span>包装费:</span>
+                <span>¥3.00</span>
+            </div>
+            <div class="summary-row total">
+                <span>实付金额:</span>
+                <span>¥82.00</span>
+            </div>
+            <div class="summary-row">
+                <span>支付方式:</span>
+                <span>微信支付</span>
+            </div>
+        </div>
+
+        <div class="qr-section">
+            <div>扫码评价，赢积分好礼</div>
+            <div class="qr-code">二维码占位符</div>
+        </div>
+
+        <div class="footer">
+            <div>客服电话: 400-888-8888</div>
+            <div>www.heytea.com</div>
+            <div class="thank-you">感谢您的光临！</div>
+        </div>
+    </div>
+</body>
+</html>

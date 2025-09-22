@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{{ title | upper}}</title>
+    </head>
+    <body>
+        <h1>全民制作人们大家好，我是练习时长两年半的个人{{username}}</h1>
+        <img
+            src="{{ img_url }}"
+            alt="蔡徐坤"
+            style="width: 400px; height: 300px"
+        />
+        <h3>爱好列表</h3>
+        <ul>
+            {% for hobby in hobbies %}
+            <li>{{ hobby }}</li>
+            {% endfor %}
+        </ul>
+    </body>
+</html>
