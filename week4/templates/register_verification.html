@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>注册页面</h1>
+    <form method="post" novalidate>
+        {# 定义宏循环遍历错误信息列表#}
+        {% macro print_error(form_fields_errors) %}
+        {% for error_message in form_fields_errors %}
+            <p class="error" style="color: red;
+                                 display:inline;" >{{ error_message }}</p>
+        {% endfor %}
+        {% endmacro %}
+        {{ form.csrf_token }}
+        <span>{{ form.username.label }}</span><br>
+        {{ form.username }}{{ print_error(form.username.errors) }}<br>
+        <span>{{ form.password.label }}</span><br>
+        {{ form.password }}{{ print_error(form.password.errors) }}<br>
+        <span>{{ form.password2.label }}</span><br>
+        {{ form.password2 }}{{ print_error(form.password2.errors) }}<br>
+        <p>{{ form.submit }}</p>
+    </form>
+</body>
+</html>

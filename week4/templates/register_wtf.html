@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>注册页面</h1>
+    <form method="post" novalidate>
+        {{ form.csrf_token }}
+        {#获取username对应的标签名称#}
+         <span>{{ form.username.label }}</span><br>
+        {#调用表单字段渲染为HTML#}
+        {{ form.username }}<br>
+        <span>{{ form.password.label }}</span><br>
+        {{ form.password }}<br>
+        <span>{{ form.password2.label }}</span><br>
+        {{ form.password2 }}<br>
+        <p>{{ form.submit }}</p>
+    </form>
+</body>
+</html>

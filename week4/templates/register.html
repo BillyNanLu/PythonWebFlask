@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>注册页面</h1>
+    {#给用户展示不同的消息闪现#}
+    {% macro print_error(type) %}
+        {% for message in get_flashed_messages(category_filter = (type)) %}
+            <p class="error" style="color: red;
+                display:inline;">{{ message }}</p>
+        {% endfor %}
+    {% endmacro %}
+    <form action="" method=post>
+        <span>用户名:</span><br>
+        <input type=text name=username>{{ print_error('message') }}
+        {{ print_error('info') }}<br>
+        <span>密码:</span><br>
+        <input type=password name=password><br>
+        <span>确认密码:</span><br>
+        <input type=password name=password2>{{ print_error('error') }}<br>
+        <p><input type=submit value=注册></p>
+    </form>
+</body>
+</html>

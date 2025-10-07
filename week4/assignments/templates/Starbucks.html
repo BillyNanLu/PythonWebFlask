@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星巴克购物小票</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/Starbucks.css')}}">
+</head>
+<body>
+    <div class="receipt">
+        <div class="logo">
+            <img src="{{url_for('static', filename='img/logo.png')}}" alt="星巴克logo">
+            <span>STARBUCKS</span>
+        </div>
+
+        <div class="store-info">
+            <p>Starbucks Coffee China</p>
+            <p>{{store_no}}-{{store_name}}</p>
+            <p>外带</p>
+        </div>
+
+        <div class="order-number">{{order.order_number}}</div>
+
+        <div class="header-row">
+            <div class="header-item">商品</div>
+            <div class="header-item">数量</div>
+            <div class="header-item">金额</div>
+        </div>
+
+        <hr class="separator">
+
+        <!-- 循环展示所有商品 -->
+        {% for item in order_items %}
+        <div class="product">
+            <div class="product-name">
+                <div>{{item.product.name}}</div>
+                <div>¥{{ "%.2f" | format(item.product.base_price) }}</div>
+            </div>
+            <div class="product-details">
+                <div>{{item.details or '无备注'}}</div>
+                <div>×{{item.quantity}}</div>
+                <div>¥{{ "%.2f" | format(item.product.base_price * item.quantity) }}</div>
+            </div>
+        </div>
+        {% endfor %}
+
+        <!-- 折扣信息 -->
+        {% if dp %}
+        <div class="discount">
+            <div>{{dp.details}}</div>
+            <div>-¥{{"%.2f" | format(dp.amount) }}</div>
+        </div>
+        {% endif %}
+
+        <div class="total">总价 ¥{{ "%.2f" | format(total_amount) }}</div>
+
+        <hr class="separator">
+
+        <div class="info-row">
+            <div>下单时间</div>
+            <div>{{order.order_time.strftime('%Y-%m-%d %H:%M:%S')}}</div>
+        </div>
+
+        <div class="info-row">
+            <div>付款</div>
+            <div>¥{{ "%.2f" | format(total_amount) }}</div>
+        </div>
+
+        <div class="info-row">
+            <div>应付找零</div>
+            <div>¥0.00</div>
+        </div>
+
+        <!-- 支付方式信息 -->
+        <div class="payment-method">
+            <div class="info-row">
+                <div class="payment-method-name">{{payment.method}}</div>
+                <div class="payment-amount">¥{{ "%.2f" | format(payment.amount) }}</div>
+            </div>
+            <div class="payment-method-number">{{payment.code}}</div>
+        </div>
+
+        {% if dp %}
+        <div class="payment-method">
+            <div class="info-row">
+                <div class="payment-method-name">{{dp.method}}</div>
+                <div class="payment-amount">¥{{ "%.2f" | format(dp.amount or 0) }}</div>
+            </div>
+            <div class="payment-method-number">{{dp.code}}</div>
+        </div>
+        {% endif %}
+
+        <hr class="separator">
+
+        <div class="payment-details">
+            <h3>{{payment.method}}支付详情</h3>
+
+            <div class="info-row">
+                <div>用户支付User Paid</div>
+                <div>¥{{ "%.2f" | format(payment.amount) }}</div>
+            </div>
+
+            {% if payment.discount_details %}
+            <div class="info-row">
+                <div>{{payment.discount_details}}</div>
+            </div>
+            {% endif %}
+
+            <div class="info-row">
+                <div>支付订单号</div>
+                <div>{{payment.code}}</div>
+            </div>
+        </div>
+
+        <hr class="final-separator">
+
+        <div class="info-row">
+            <div>发票提取码</div>
+            <div>{{order.invoice_code}}</div>
+        </div>
+
+        <hr class="final-separator">
+    </div>
+</body>
+</html>
