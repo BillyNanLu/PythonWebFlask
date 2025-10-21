@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{user.name}}的订单记录</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/Starbucks.css')}}">
+    <style>
+        .order-list {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .order-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            background: white;
+        }
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="order-list">
+        <h2>{{user.name}}的订单记录</h2>
+        {% for item in order_list %}
+        <div class="order-card">
+            <div class="order-header">
+                <div>订单号: {{item.order.order_number}}</div>
+                <div>商店: {{item.store.store_name}}</div>
+            </div>
+            <div class="info-row">
+                <div>时间: {{item.order.order_time.strftime('%Y-%m-%d %H:%M')}}</div>
+                <div>商品数量: {{item.item_count}}件</div>
+                <div>总金额: ¥{{"%.2f"|format(item.total)}}</div>
+            </div>
+            <div style="text-align: right; margin-top: 10px;">
+                <a href="{{url_for('show_order', order_id=item.order.id)}}">查看详情</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

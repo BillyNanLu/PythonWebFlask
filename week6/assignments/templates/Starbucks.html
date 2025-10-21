@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星巴克购物小票</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/Starbucks.css')}}">
+</head>
+<body>
+    <div class="receipt">
+        <div class="logo">
+            <img src="{{url_for('static', filename='img/logo.png')}}" alt="星巴克logo">
+            <span>STARBUCKS</span>
+        </div>
+
+        <div class="store-info">
+            <p>Starbucks Coffee China</p>
+            <p>{{store_no}}-{{store_name}}</p>
+            <p>外带</p>
+        </div>
+
+        <div class="order-number">{{order.order_number}}</div>
+
+        <div class="header-row">
+            <div class="header-item">商品</div>
+            <div class="header-item">数量</div>
+            <div class="header-item">金额</div>
+        </div>
+
+        <hr class="separator">
+
+        <!-- 循环展示所有商品 -->
+        {% for item in order_items %}
+        <div class="product">
+            <div class="product-name">
+                <div>{{item.product.name}}</div>
+                <div>¥{{ "%.2f" | format(item.product.base_price) }}</div>
+            </div>
+            <div class="product-details">
+                <div>{{item.details or '无备注'}}</div>
+                <div>×{{item.quantity}}</div>
+                <div>¥{{ "%.2f" | format(item.product.base_price * item.quantity) }}</div>
+            </div>
+        </div>
+        {% endfor %}
+
+        <!-- 折扣信息 -->
+        {% if dp %}
+        <div class="discount">
+            <div>{{dp.details}}</div>
+            <div>-¥{{"%.2f" | format(dp.amount) }}</div>
+        </div>
+        {% endif %}
+
+        <div class="total">总价 ¥{{ "%.2f" | format(total_amount) }}</div>
+
+        <hr class="separator">
+
+        <div class="info-row">
+            <div>下单时间</div>
+            <div>{{order.order_time.strftime('%Y-%m-%d %H:%M:%S')}}</div>
+        </div>
+
+        <div class="info-row">
+            <div>付款</div>
+            <div>¥{{ "%.2f" | format(total_amount) }}</div>
+        </div>
+
+        <div class="info-row">
+            <div>应付找零</div>
+            <div>¥0.00</div>
+        </div>
+
+        <!-- 支付方式信息 -->
+        <div class="payment-method">
+            <div class="info-row">
+                <div class="payment-method-name">{{payment.method}}</div>
+                <div class="payment-amount">¥{{ "%.2f" | format(payment.amount) }}</div>
+            </div>
+            <div class="payment-method-number">{{payment.code}}</div>
+        </div>
+
+        {% if dp %}
+        <div class="payment-method">
+            <div class="info-row">
+                <div class="payment-method-name">{{dp.method}}</div>
+                <div class="payment-amount">¥{{ "%.2f" | format(dp.amount or 0) }}</div>
+            </div>
+            <div class="payment-method-number">{{dp.code}}</div>
+        </div>
+        {% endif %}
+
+        <hr class="separator">
+
+        <div class="payment-details">
+            <h3>{{payment.method}}支付详情</h3>
+
+            <div class="info-row">
+                <div>用户支付User Paid</div>
+                <div>¥{{ "%.2f" | format(payment.amount) }}</div>
+            </div>
+
+            {% if payment.discount_details %}
+            <div class="info-row">
+                <div>{{payment.discount_details}}</div>
+            </div>
+            {% endif %}
+
+            <div class="info-row">
+                <div>支付订单号</div>
+                <div>{{payment.code}}</div>
+            </div>
+        </div>
+
+        <hr class="final-separator">
+
+        <div class="info-row">
+            <div>发票提取码</div>
+            <div>{{order.invoice_code}}</div>
+        </div>
+
+        <hr class="final-separator">
+
+        <!-- 饼图容器 -->
+        <div class="chart-container">
+            <h3>商品数量占比</h3>
+            <div id="pieChart" style="width: 100%; height: 300px;"></div>
+        </div>
+
+    </div>
+
+    <script type="text/javascript" src="/static/vendor/echarts-stat/ecStat.min.js"></script>
+    <script src="/static/js/echarts.min.js"></script>
+    <script src="/static/js/infographic.js"></script>
+    <script src="/static/js/show_data_pie.js"></script>
+    <script src="/static/js/f_data.js"></script>
+    <script src="/static/js/show_column_data.js"></script>
+    <script src="/static/js/show_broken_line_data.js"></script>
+
+    <script>
+        // 准备饼图数据（从模板变量获取）
+        const pieData = [
+            {% for item in order_items %}
+            {
+                name: "{{ item.product.name }}",
+                value: {{ item.quantity }}
+            }{% if not loop.last %},{% endif %}
+            {% endfor %}
+        ];
+
+        // 初始化饼图
+        const chartDom = document.getElementById('pieChart');
+        const myChart = echarts.init(chartDom);
+        let option;
+
+        option = {
+            title: {
+                // text: '订单商品数量占比',
+                left: 'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left'
+            },
+            series: [
+                {
+                    name: '购买数量',
+                    type: 'pie',
+                    radius: '70%',
+                    data: pieData,
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+
+        option && myChart.setOption(option);
+
+        // 响应窗口大小变化
+        window.addEventListener('resize', function() {
+            myChart.resize();
+        });
+    </script>
+</body>
+</html>

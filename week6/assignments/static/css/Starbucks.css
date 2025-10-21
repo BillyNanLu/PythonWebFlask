@@ -1,0 +1,150 @@
+body {
+    font-family: "Arial", "SimHei", sans-serif;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.receipt {
+    width: 320px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 25px 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.logo img {
+    width: 40px;
+    height: 40px;
+    margin-right: 8px;
+}
+
+.logo span {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.store-info {
+    text-align: center;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.store-info p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.order-number {
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+    color: #006633;
+    margin: 20px 0;
+    letter-spacing: 1px;
+}
+
+.separator {
+    border: none;
+    border-top: 1px dashed #ccc;
+    margin: 12px 0;
+}
+
+.header-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.header-item {
+    font-weight: bold;
+}
+
+.product {
+    margin: 10px 0;
+}
+
+.product-name {
+    font-weight: 500;
+    margin-bottom: 3px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.product-details {
+    font-size: 13px;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.discount {
+    color: #006633;
+    font-size: 14px;
+    margin: 8px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.total {
+    font-size: 15px;
+    font-weight: bold;
+    text-align: right;
+    margin: 15px 0;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 8px 0;
+    font-size: 14px;
+}
+
+.payment-method {
+    margin: 12px 0;
+}
+
+.payment-method-name {
+    font-size: 14px;
+    margin-bottom: 3px;
+}
+
+.payment-method-number {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 3px;
+}
+
+.payment-amount {
+    text-align: right;
+    font-size: 14px;
+}
+
+.payment-details {
+    margin-top: 15px;
+}
+
+.payment-details h3 {
+    font-size: 15px;
+    text-align: center;
+    margin: 15px 0;
+    font-weight: 600;
+}
+
+.invoice-code {
+    font-size: 14px;
+    margin: 15px 0;
+}
+
+.final-separator {
+    border: none;
+    border-top: 1px dashed #ccc;
+    margin: 18px 0;
+}
