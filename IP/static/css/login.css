@@ -1,0 +1,318 @@
+/* ===== 页面基础样式 ===== */
+.login-body {
+    font-family: 'Inter', system-ui, sans-serif;
+    color: #1D2129;
+    background-color: #F7F8FA;
+}
+
+/* ===== Header ===== */
+.login-header {
+    background-color: #ffffff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    padding: 1rem 2rem;
+}
+.login-header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.login-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.login-brand-icon {
+    width: 40px;
+    height: 40px;
+    background-color: #165DFF;
+    color: white;
+    border-radius: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.login-brand-name {
+    font-size: 1.125rem;
+    font-weight: bold;
+    color: #165DFF;
+}
+.login-brand-sub {
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+.login-nav a {
+    margin-left: 1.5rem;
+    color: #4B5563;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+.login-nav a:hover,
+.login-nav a.active {
+    color: #165DFF;
+}
+
+/* ===== Main区域 ===== */
+.login-main {
+    padding: 4rem 2rem;
+    display: flex;
+    justify-content: center;
+}
+.login-wrapper {
+    display: flex;
+    width: 100%;
+    max-width: 960px;
+    background-color: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+/* ===== 左侧品牌介绍 ===== */
+.login-left {
+    width: 50%;
+    padding: 2.5rem;
+    background: linear-gradient(to right, rgba(22, 93, 255, 0.9), rgba(22, 93, 255, 0.7)),
+    url('../image/home/bigbackground.jpg') center/cover no-repeat;
+    color: #fff;
+}
+.login-left-title {
+    font-size: 1.875rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+.login-left-desc {
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+.login-features {
+    margin-bottom: 2rem;
+}
+.login-feature {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+.login-feature-icon {
+    width: 48px;
+    height: 48px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 9999px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.login-feature-title {
+    font-size: 1.125rem;
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+}
+.login-feature-desc {
+    opacity: 0.8;
+}
+.login-socials a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255,255,255,0.2);
+    border-radius: 9999px;
+    margin-right: 1rem;
+    color: white;
+    transition: background-color 0.3s;
+}
+.login-socials a:hover {
+    background-color: rgba(255,255,255,0.3);
+}
+
+/* ===== 右侧登录表单 ===== */
+.login-right {
+    width: 50%;
+    padding: 2.5rem;
+}
+.login-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+.login-form-group {
+    margin-bottom: 1.5rem;
+}
+.login-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #4B5563;
+}
+.login-input-box {
+    position: relative;
+}
+.login-input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    transition: border-color 0.3s;
+}
+.login-input:focus {
+    border-color: #165DFF;
+    outline: none;
+}
+.login-icon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9CA3AF;
+}
+.login-password-toggle {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #9CA3AF;
+}
+.login-captcha-group {
+    display: flex;
+    gap: 1rem;
+}
+.captcha-box {
+    width: 9rem;
+    height: 3rem;
+    background-color: #f5f5f5;
+    border-radius: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+.captcha-text {
+    font-family: 'Courier New', monospace;
+    font-size: 1.125rem;
+    letter-spacing: 4px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+.login-error {
+    color: #EF4444;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+.hidden {
+    display: none;
+}
+
+/* ===== 登录操作按钮等 ===== */
+.login-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.875rem;
+    color: #4B5563;
+    margin-bottom: 1rem;
+}
+.login-options a {
+    color: #165DFF;
+    text-decoration: none;
+}
+.login-options a:hover {
+    text-decoration: underline;
+}
+.login-button {
+    width: 100%;
+    background-color: #165DFF;
+    color: white;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+.login-button:hover {
+    background-color: #104ac7;
+}
+.login-register {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 0.875rem;
+}
+.login-register a {
+    color: #165DFF;
+    text-decoration: none;
+    margin-left: 0.25rem;
+}
+.login-register a:hover {
+    text-decoration: underline;
+}
+
+/* ===== Footer ===== */
+.login-footer {
+    background-color: #1D2129;
+    color: white;
+    padding: 3rem 0;
+    margin-top: 4rem;
+}
+
+.login-footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0 2rem;
+}
+
+.login-footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.login-footer-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: #165DFF;
+    border-radius: 0.5rem;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.25rem;
+}
+
+.login-footer-title {
+    font-size: 1.125rem;
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+}
+
+.login-footer-subtitle {
+    font-size: 0.875rem;
+    color: #9CA3AF;
+}
+
+.login-footer-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.login-footer-links a {
+    color: #9CA3AF;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.login-footer-links a:hover {
+    color: white;
+}
+
+.login-footer-bottom {
+    border-top: 1px solid #374151;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    text-align: center;
+    font-size: 0.875rem;
+    color: #9CA3AF;
+}

@@ -1,0 +1,63 @@
+/* Chat 气泡样式 */
+.message-wrapper {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+}
+
+.message-wrapper.user {
+    flex-direction: row-reverse;
+}
+
+.message-bubble {
+    max-width: 75%;
+    padding: 14px 20px;
+    font-size: 1rem;
+    line-height: 1.6;
+    border-radius: 1.5rem;
+    word-break: break-word;
+    white-space: pre-wrap;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    animation: fadeInText 0.4s ease-in-out;
+}
+
+.message-bubble.user {
+    background-color: #165DFF;
+    color: white;
+    border-bottom-right-radius: 0.4rem;
+}
+
+.message-bubble.ai {
+    background-color: #E5EAF0;
+    color: #1f2937;
+    border-bottom-left-radius: 0.4rem;
+}
+
+@keyframes fadeInText {
+    0% {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#chatBox {
+    background-color: #f7f9fc;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    height: 100%;
+    overflow-y: auto;
+}
+
+#chatBox::-webkit-scrollbar {
+    width: 6px;
+}
+
+#chatBox::-webkit-scrollbar-thumb {
+    background-color: #165DFF;
+    border-radius: 3px;
+}

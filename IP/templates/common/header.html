@@ -1,0 +1,56 @@
+<header id="navbar" class="fixed top-0 left-0 w-full z-50 transition-navbar bg-white/95 backdrop-blur-md shadow-sm">
+    <div class="container mx-auto px-8">
+        <div class="flex justify-between items-center h-16 md:h-20">
+            <!-- Logo部分 -->
+            <div class="flex items-center">
+                <a href="{{ url_for('home') }}" class="flex items-center space-x-2">
+                    <div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white">
+                        <i class="fa fa-rocket text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-lg md:text-xl font-bold text-primary">IP创氪师</h1>
+                        <p class="text-xs text-gray-500">成长，长成自己的样子</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- 导航栏 -->
+            <nav class="flex items-center space-x-8">
+                <a href="{{ url_for('home') }}" class="text-gray-700 hover:text-primary transition-colors font-medium border-b-2 border-primary">首页</a>
+                <a href="{{ url_for('courses') }}" class="text-gray-700 hover:text-primary transition-colors font-medium">课程培训</a>
+                <a href="{{ url_for('consult') }}" class="text-gray-700 hover:text-primary transition-colors font-medium">一对一职业规划咨询</a>
+
+                {% if login_user and (login_user.role_id == 1 or login_user.role_id == 2) %}
+                    <a href="{{ url_for('admin_dashboard') }}" class="text-gray-700 hover:text-primary transition-colors font-medium">工作台</a>
+                {% else %}
+                    <a href="{{ url_for('person_center') }}" class="text-gray-700 hover:text-primary transition-colors font-medium">个人中心</a>
+                {% endif %}
+            </nav>
+
+            <!-- 登录/用户信息部分 -->
+            <div class="flex items-center space-x-4">
+                {% if login_user %}
+                    <div class="flex items-center space-x-2">
+                        {% if login_user.avatar %}
+                            <img src="{{ login_user.avatar }}" alt="头像"
+                                 class="w-8 h-8 rounded-full object-cover border border-gray-300">
+                        {% else %}
+                            <img src="{{ url_for('static', filename='image/users/defaultavatars.jpg') }}" alt="默认头像"
+                                 class="w-8 h-8 rounded-full object-cover border border-gray-300">
+                        {% endif %}
+                        <span class="text-gray-700 font-medium">{{ login_user.username }}</span>
+                        <a href="{{ url_for('logout') }}" class="text-sm text-red-500 hover:underline">退出</a>
+                    </div>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="text-gray-700 hover:text-primary transition-colors font-medium">登录</a>
+                    <a href="{{ url_for('register') }}" class="text-gray-700 hover:text-primary transition-colors font-medium">注册</a>
+                {% endif %}
+
+                <a href="#consult"
+                   class="bg-secondary hover:bg-secondary/90 text-white px-5 py-2 rounded-full font-medium transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                    立即咨询
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
