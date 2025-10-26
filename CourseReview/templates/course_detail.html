@@ -1,0 +1,63 @@
+{% extends 'layout.html' %}
+{% block title %}{{ course.name }}{% endblock %}
+
+{% block content %}
+<section class="max-w-3xl mx-auto py-12 px-4">
+  <h2 class="text-3xl font-bold mb-4 text-gray-800">{{ course.name }}</h2>
+  <p class="text-gray-600 mb-2">教师：{{ course.teacher }}</p>
+
+  <!-- ⭐ 平均评分显示 -->
+  <div class="flex items-center mb-6">
+    <p class="text-yellow-500 font-semibold mr-2">平均评分：{{ avg_rating }} / 5</p>
+    <div class="flex">
+      {% for i in range(1,6) %}
+        {% if i <= avg_rating|round(0,'floor') %}
+          <span class="text-yellow-500">★</span>
+        {% else %}
+          <span class="text-gray-300">★</span>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <p class="text-gray-700 mb-8">{{ course.description }}</p>
+
+  <!-- 提交评价 -->
+  {% if session.get('user_id') %}
+  <form method="POST" action="{{ url_for('course.add_review', course_id=course.id) }}" 
+        class="bg-blue-50 rounded-xl p-6 mb-8">
+    <h3 class="text-xl font-semibold mb-4 text-blue-700">发表评价</h3>
+    <label class="block mb-2 text-gray-700">评分（1-5）：</label>
+    <select name="rating" required class="border rounded w-full p-2 mb-4">
+      <option value="">请选择</option>
+      {% for i in range(1,6) %}
+      <option value="{{ i }}">{{ i }} 星</option>
+      {% endfor %}
+    </select>
+
+    <textarea name="comment" placeholder="写下你的学习体验..." rows="3"
+              class="border rounded w-full p-3 mb-4"></textarea>
+
+    <button class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">提交评价</button>
+  </form>
+  {% else %}
+  <p class="text-gray-500 mb-8">请 <a href="{{ url_for('user.login') }}" class="text-blue-600 hover:underline">登录</a> 后发表评价。</p>
+  {% endif %}
+
+  <!-- 评价列表 -->
+  <h3 class="text-2xl font-bold text-gray-800 mb-4">课程评价</h3>
+  {% if reviews %}
+  <div class="space-y-4">
+    {% for r in reviews %}
+    <div class="bg-white shadow rounded-xl p-4">
+      <p class="text-yellow-500 font-semibold mb-1">⭐ {{ r.rating }} / 5</p>
+      <p class="text-gray-700">{{ r.comment }}</p>
+      <p class="text-sm text-gray-500 mt-2">用户ID：{{ r.user_id }} · {{ r.create_time.strftime('%Y-%m-%d %H:%M') }}</p>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="text-gray-500">还没有评价，快来成为第一个吧！</p>
+  {% endif %}
+</section>
+{% endblock %}

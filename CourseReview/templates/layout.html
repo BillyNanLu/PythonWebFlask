@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}课程评价系统{% endblock %}</title>
+
+  <!-- ✅ 引入 TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- ✅ 页面字体 + 自定义样式 -->
+  <style>
+    body {
+      font-family: 'Inter', 'Noto Sans SC', sans-serif;
+      background-color: #f9fafb;
+    }
+    .nav-link {
+      @apply text-gray-700 hover:text-blue-600 font-medium;
+    }
+    .container {
+      max-width: 900px;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+
+  <!-- ✅ 顶部导航栏 -->
+  <header class="bg-white shadow-sm fixed top-0 left-0 w-full z-50">
+    <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+      <a href="/" class="text-xl font-bold text-blue-600">📘 课程评价系统</a>
+
+      <nav class="space-x-6">
+        <a href="/" class="nav-link">首页</a>
+        <a href="/courses" class="nav-link">课程列表</a>
+        {% if session.get('user_id') %}
+          <a href="/user/profile" class="nav-link">个人中心</a>
+          <a href="/user/logout" class="nav-link">退出</a>
+        {% else %}
+          <a href="/user/login" class="nav-link">登录</a>
+          <a href="/user/register" class="nav-link">注册</a>
+        {% endif %}
+      </nav>
+    </div>
+  </header>
+
+  <!-- ✅ 页面主体内容 -->
+  <main class="flex-grow pt-20">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="max-w-xl mx-auto my-4">
+          {% for category, message in messages %}
+            <div class="rounded-md p-3 mb-2 text-center
+              {% if category == 'success' %}bg-green-100 text-green-700
+              {% elif category == 'error' %}bg-red-100 text-red-700
+              {% elif category == 'warning' %}bg-yellow-100 text-yellow-700
+              {% else %}bg-blue-100 text-blue-700{% endif %}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- ✅ 页脚 -->
+  <footer class="bg-white border-t text-center text-gray-500 py-4 mt-8">
+    <p class="text-sm">&copy; {{ 2025 }} 简易课程评价系统 | Flask + TailwindCSS</p>
+  </footer>
+</body>
+</html>
