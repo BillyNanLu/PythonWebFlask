@@ -25,9 +25,6 @@ def list_courses():
 # 课程详情 + 评价展示
 @course_bp.route('/<int:course_id>')
 def course_detail(course_id):
-    # course = Course.query.get_or_404(course_id)
-    # reviews = Review.query.filter_by(course_id=course_id).order_by(Review.create_time.desc()).all()
-    # return render_template('course_detail.html', course=course, reviews=reviews)
     course = Course.query.get_or_404(course_id)
     reviews = Review.query.filter_by(course_id=course_id).order_by(Review.create_time.desc()).all()
 
@@ -47,7 +44,7 @@ def course_detail(course_id):
 def add_review(course_id):
     if 'user_id' not in session:
         flash('请先登录后再评价！', 'error')
-        return redirect(url_for('user.login'))
+        return redirect(url_for('user.login', next=request.url))
 
     rating = int(request.form.get('rating'))
     comment = request.form.get('comment')
@@ -65,3 +62,24 @@ def add_review(course_id):
 
     flash('评价提交成功！', 'success')
     return redirect(url_for('course.course_detail', course_id=course_id))
+
+
+# 删除自己的评论
+@course_bp.route('/delete/<int:review_id>', methods=['POST'])
+def delete_review(review_id):
+    user_id = session.get('user_id')
+    if not user_id:
+        flash('请先登录', 'warning')
+        return redirect(url_for('user.login'))
+
+    review = Review.query.get_or_404(review_id)
+
+    # 权限判断
+    if review.user_id != user_id:
+        flash('你无权删除这条评论', 'error')
+        return redirect(url_for('course.course_detail', course_id=review.course_id))
+
+    db.session.delete(review)
+    db.session.commit()
+    flash('评论已删除', 'success')
+    return redirect(url_for('course.course_detail', course_id=review.course_id))

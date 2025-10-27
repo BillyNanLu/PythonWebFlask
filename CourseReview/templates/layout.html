@@ -34,7 +34,7 @@
         <a href="/" class="nav-link">首页</a>
         <a href="/courses" class="nav-link">课程列表</a>
         {% if session.get('user_id') %}
-          <a href="/user/profile" class="nav-link">个人中心</a>
+          <a href="/user/profile" class="nav-link">hi, {{session.get('username')}} | 个人中心</a>
           <a href="/user/logout" class="nav-link">退出</a>
         {% else %}
           <a href="/user/login" class="nav-link">登录</a>
@@ -62,12 +62,34 @@
       {% endif %}
     {% endwith %}
 
+    <!-- 添加这段脚本实现自动消失 -->
+    <script>
+      // 选择所有 flash 消息元素
+      const flashMessages = document.querySelectorAll('.rounded-md.p-3.mb-2.text-center');
+
+      // 遍历每个消息，设置自动消失
+      flashMessages.forEach(message => {
+        // 3秒后开始淡出（3000毫秒）
+        setTimeout(() => {
+          // 添加淡出动画
+          message.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
+          message.style.opacity = '0';
+          message.style.transform = 'translateY(-10px)';
+
+          // 动画结束后移除元素
+          setTimeout(() => {
+            message.remove();
+          }, 500);
+        }, 3000);
+      });
+    </script>
+
     {% block content %}{% endblock %}
   </main>
 
   <!-- ✅ 页脚 -->
   <footer class="bg-white border-t text-center text-gray-500 py-4 mt-8">
-    <p class="text-sm">&copy; {{ 2025 }} 简易课程评价系统 | Flask + TailwindCSS</p>
+    <p class="text-sm">&copy; {{ 2025 }} 简易课程评价系统 | nan19工作室</p>
   </footer>
 </body>
 </html>

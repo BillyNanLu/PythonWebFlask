@@ -17,8 +17,9 @@
     {% for c in courses %}
     <div class="bg-white shadow rounded-xl p-6 hover:shadow-lg transition">
       <h3 class="text-xl font-semibold text-blue-700 mb-2">{{ c.name }}</h3>
-      <p class="text-yellow-500 font-semibold mb-2">
-          ⭐ {{ avg_ratings[c.id] }} / 5
+      <p class="text-sm mt-2">
+          {% set avg_rating = avg_ratings[c.id] %}
+          {% include 'components/stars.html' with context %}
       </p>
       <p class="text-gray-600 text-sm mb-2">教师：{{ c.teacher }}</p>
       <p class="text-gray-500 text-sm line-clamp-3">{{ c.description[:80] }}...</p>
