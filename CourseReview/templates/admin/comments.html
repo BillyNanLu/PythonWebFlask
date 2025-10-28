@@ -1,0 +1,42 @@
+{% extends 'admin/layout.html' %}
+{% block content %}
+<h1 class="text-2xl font-semibold mb-6">课程评论管理</h1>
+
+<div class="bg-white p-6 rounded-lg shadow-md">
+  <table class="w-full border-collapse">
+    <thead>
+      <tr class="bg-gray-100 text-gray-700 text-left">
+        <th class="p-3 border-b">ID</th>
+        <th class="p-3 border-b">用户</th>
+        <th class="p-3 border-b">课程</th>
+        <th class="p-3 border-b">评论内容</th>
+        <th class="p-3 border-b">评分</th>
+        <th class="p-3 border-b">评论时间</th>
+        <th class="p-3 border-b text-right">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for c in comments %}
+      <tr class="hover:bg-gray-50 transition">
+        <td class="p-3 border-b">{{ c.id }}</td>
+        <td class="p-3 border-b">{{ c.user.username }}</td>
+        <td class="p-3 border-b">{{ c.course.name }}</td>
+        <td class="p-3 border-b text-gray-700 max-w-md truncate">{{ c.comment }}</td>
+        <td class="p-3 border-b">{{ c.rating }}</td>
+        <td class="p-3 border-b">{{ c.create_time.strftime('%Y-%m-%d %H:%M') }}</td>
+        <td class="p-3 border-b text-right">
+          <form action="{{ url_for('admin.delete_comment', comment_id=c.id) }}" method="POST"
+                onsubmit="return confirm('确定要删除这条评论吗？');">
+            <button type="submit" class="text-red-500 hover:text-red-700 text-sm">删除</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% if not comments %}
+  <p class="text-center text-gray-500 py-4">暂无评论。</p>
+  {% endif %}
+</div>
+{% endblock %}

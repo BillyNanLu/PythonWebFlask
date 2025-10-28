@@ -66,10 +66,15 @@ def login():
             session['role'] = user.role
             flash('登录成功！', 'success')
 
-            # 登录后跳转回原页面
-            if next_page and is_safe_url(next_page):
-                return redirect(next_page)
-            return redirect(url_for('user.profile'))
+            # 管理员跳后台，普通用户跳个人中心
+            if user.role == 1:
+                return redirect(url_for('admin.dashboard'))
+            else:
+                # 若存在安全的 next_page 参数（如登录前的受保护页）
+                if next_page and is_safe_url(next_page):
+                    return redirect(next_page)
+                return redirect(url_for('user.profile'))
+
         else:
             flash('用户名或密码错误', 'error')
             return redirect(url_for('user.login'))

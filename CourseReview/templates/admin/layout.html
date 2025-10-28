@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <title>后台管理系统</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+  <div class="flex min-h-screen">
+    <!-- 侧边栏 -->
+    <aside class="w-64 bg-gray-800 text-white fixed h-screen flex flex-col">
+      <div class="px-6 py-4 text-xl font-bold border-b border-gray-700">
+        管理员后台
+      </div>
+      <nav class="flex-1 px-4 py-6 space-y-2">
+        <a href="{{ url_for('admin.dashboard') }}" class="block py-2 px-3 rounded hover:bg-gray-700 {% if request.path.endswith('/dashboard') %}bg-gray-700{% endif %}">
+          📊 控制面板
+        </a>
+        <a href="{{ url_for('admin.users') }}" class="block py-2 px-3 rounded hover:bg-gray-700 {% if '/users' in request.path %}bg-gray-700{% endif %}">
+          👥 用户管理
+        </a>
+        <a href="{{ url_for('admin.courses') }}" class="block py-2 px-3 rounded hover:bg-gray-700 {% if '/courses' in request.path %}bg-gray-700{% endif %}">
+          📚 课程管理
+        </a>
+        <a href="{{ url_for('admin.comments') }}" class="block py-2 px-3 rounded hover:bg-gray-700 {% if '/comments' in request.path %}bg-gray-700{% endif %}">
+          📚 课程评论管理
+        </a>
+      </nav>
+      <div class="px-4 py-4 border-t border-gray-700">
+        <a href="{{ url_for('user.logout') }}" class="block w-full text-center bg-red-500 hover:bg-red-600 py-2 rounded">
+          退出登录
+        </a>
+      </div>
+    </aside>
+
+    <!-- 主体内容 -->
+    <main class="flex-1 ml-64 p-6 overflow-y-auto">
+      {% block content %}
+      {% endblock %}
+    </main>
+  </div>
+
+</body>
+</html>

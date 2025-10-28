@@ -2,6 +2,7 @@ from flask import Flask, render_template
 from settings import Config, db
 from routes.user_routes import user_bp
 from routes.course_routes import course_bp
+from routes.admin_routes import admin_bp
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -11,6 +12,7 @@ db.init_app(app)
 # 注册蓝图
 app.register_blueprint(user_bp)
 app.register_blueprint(course_bp)
+app.register_blueprint(admin_bp)
 
 with app.app_context():
     db.create_all()
