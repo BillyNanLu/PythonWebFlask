@@ -6,42 +6,6 @@ from sqlalchemy import desc
 
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 
-# # -----------------------------
-# # 登录权限校验（装饰器）
-# # -----------------------------
-# def admin_required(func_view):
-#     from functools import wraps
-#     @wraps(func_view)
-#     def wrapper(*args, **kwargs):
-#         if 'user_id' not in session:
-#             flash('请先登录管理员账号！', 'warning')
-#             return redirect(url_for('user.login'))
-#         if session.get('role') != 1:
-#             flash('您不是管理员，无法访问后台！', 'error')
-#             return redirect(url_for('user.profile'))
-#         return func_view(*args, **kwargs)
-#     return wrapper
-#
-#
-#
-# # -----------------------------
-# # 管理员首页：数据面板
-# # -----------------------------
-# @admin_bp.route('/')
-# @admin_required
-# def dashboard():
-#     user_count = User.query.count()
-#     course_count = Course.query.count()
-#     review_count = Review.query.count()
-#     avg_rating = db.session.query(func.avg(Review.rating)).scalar() or 0
-#     avg_rating = round(avg_rating, 1)
-#
-#     return render_template('admin/admin_dashboard.html',
-#                            user_count=user_count,
-#                            course_count=course_count,
-#                            review_count=review_count,
-#                            avg_rating=avg_rating)
-
 
 # 管理员登录验证装饰器
 def admin_required(f):
@@ -80,12 +44,31 @@ def dashboard():
         .all()
     )
 
+    # 📊 获取课程评论数
+    course_review_data = db.session.query(
+        Course.name, func.count(Review.id)
+    ).outerjoin(Review, Review.course_id == Course.id) \
+        .group_by(Course.name).all()
+
+    # 📊 获取评分分布
+    rating_query = db.session.query(
+        Review.rating, func.count(Review.id)
+    ).group_by(Review.rating).all()
+
+    # 转换格式：[{name: '1星', value: 数量}, {name: '2星', value: 数量}, ...]
+    rating_data = [
+        {"name": f"{rating} 星", "value": count}
+        for rating, count in rating_query
+    ]
+
     return render_template(
         'admin/dashboard.html',
         user_count=user_count,
         course_count=course_count,
         review_count=review_count,
-        latest_reviews=latest_reviews
+        latest_reviews=latest_reviews,
+        course_review_data=course_review_data,
+        rating_data=rating_data
     )
 
 

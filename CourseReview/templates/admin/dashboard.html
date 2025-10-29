@@ -20,6 +20,19 @@
   </div>
 </div>
 
+<!-- 🔹 数据可视化图表区 -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+  <div class="bg-white p-6 shadow rounded-xl">
+    <h3 class="text-lg font-semibold mb-4 text-gray-700">课程评论数量</h3>
+    <div id="courseChart" style="width:100%;height:300px;"></div>
+  </div>
+
+  <div class="bg-white p-6 shadow rounded-xl">
+    <h3 class="text-lg font-semibold mb-4 text-gray-700">评分分布</h3>
+    <div id="ratingChart" style="width:100%;height:300px;"></div>
+  </div>
+</div>
+
 <!-- 🔹 最新评论模块 -->
 <div class="bg-white rounded-xl shadow p-6">
   <h3 class="text-xl font-semibold mb-4 text-gray-800">最新评论</h3>
@@ -53,5 +66,41 @@
     <p class="text-gray-500 text-center py-4">暂无新的评论。</p>
   {% endif %}
 </div>
+
+<!-- ECharts JS -->
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<script>
+  // 课程评论柱状图
+  var courseChart = echarts.init(document.getElementById('courseChart'));
+  var courseData = {
+    labels: {{ course_review_data|map(attribute=0)|list|tojson }},
+    values: {{ course_review_data|map(attribute=1)|list|tojson }}
+  };
+
+  courseChart.setOption({
+    tooltip: {},
+    xAxis: { type: 'category', data: courseData.labels },
+    yAxis: { type: 'value' },
+    series: [{
+      data: courseData.values,
+      type: 'bar',
+      itemStyle: { color: '#3b82f6' }
+    }]
+  });
+
+  // 评分分布饼图
+  var ratingChart = echarts.init(document.getElementById('ratingChart'));
+  var ratingData = {{ rating_data|tojson }};
+
+  ratingChart.setOption({
+    tooltip: { trigger: 'item' },
+    series: [{
+      type: 'pie',
+      radius: '70%',
+      data: ratingData,
+      label: { formatter: '{b} 星: {d}%' }
+    }]
+  });
+</script>
 
 {% endblock %}
