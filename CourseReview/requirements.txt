@@ -1,0 +1,21 @@
+Flask==3.0.3
+Flask-SQLAlchemy==3.1.1
+Flask-Migrate==4.0.7
+Flask-WTF==1.2.1
+Werkzeug==3.0.3
+WTForms==3.1.2
+email-validator==2.2.0
+
+PyMySQL==1.1.1
+
+# 前端模板和静态资源辅助
+Jinja2==3.1.4
+
+# 可选调试工具（建议在开发阶段使用）
+Flask-DebugToolbar==0.14.1
+
+# 若用到 Markdown 或富文本评论
+markdown==3.6
+
+# 若部署到生产环境（可选）
+gunicorn==22.0.0
